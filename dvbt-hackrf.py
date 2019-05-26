@@ -28,7 +28,7 @@ import sys
 def main(args):
     nargs = len(args)
     if nargs == 1:
-        port    = int(args[0])
+        infile    = args[0]
         outfile = None
     elif nargs == 2:
         port     = int(args[0])
@@ -76,7 +76,7 @@ def main(args):
 
     tb = gr.top_block()
 
-    src = grc_blks2.tcp_source(gr.sizeof_char*1, "127.0.0.1", port, True)
+    src = blocks.file_source(gr.sizeof_char, infile, True)
 
     dvbt_energy_dispersal = dtv.dvbt_energy_dispersal(1 * factor)
     dvbt_reed_solomon_enc = dtv.dvbt_reed_solomon_enc(2, 8, 0x11d, 255, 239, 8, 51, (8 * factor))
